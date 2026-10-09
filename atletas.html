@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#161C18">
+<title>Rutinas · Preparación física</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#EEF0EC; --surface:#FFFFFF; --surface-2:#E5E8E2; --ink:#141A16; --ink-2:#4F5A52; --ink-3:#7D877F; --line:#D4D9D1;
+  --accent:#D9501A; --accent-soft:#FBE3D8; --accent-ink:#FFFFFF;
+  --gym:#3456C4; --gym-soft:#E0E6FA; --cancha:#2B7F48; --cancha-soft:#DCEFE2;
+  --good:#2B7F48; --good-soft:#DCEFE2; --warn:#B87A06; --warn-soft:#F8EBCB;
+  --top:#161C18; --top-ink:#E6EBE4; --top-ink-2:#8F9A92;
+  --shadow:0 10px 30px rgba(20,26,22,.16);
+  --f-disp:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root{color-scheme:dark;
+    --bg:#0F1411; --surface:#161C18; --surface-2:#1E2621; --ink:#E6EBE4; --ink-2:#A3AEA6; --ink-3:#737E76; --line:#2A332D;
+    --accent:#F0692F; --accent-soft:#3A2218; --accent-ink:#140A05;
+    --gym:#7D97F2; --gym-soft:#1D2544; --cancha:#58BE7B; --cancha-soft:#16301F;
+    --good:#58BE7B; --good-soft:#16301F; --warn:#E0A62E; --warn-soft:#3A2D10;
+    --top:#0A0D0B; --shadow:0 10px 30px rgba(0,0,0,.5);}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+[hidden]{display:none!important}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{position:sticky;top:0;z-index:20;background:var(--top);color:var(--top-ink);padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;display:flex;align-items:center;gap:10px}
+.top .back{background:none;border:1px solid #2A322D;color:var(--top-ink);border-radius:8px;width:38px;height:38px;font-size:20px;line-height:1;flex:0 0 38px}
+.top .ttl{flex:1;min-width:0}
+.top .eye{font-family:var(--f-disp);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--top-ink-2)}
+.top h1{margin:0;font-family:var(--f-disp);font-weight:800;font-size:24px;line-height:1;text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top h1 b{color:var(--accent)}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+.muted{color:var(--ink-2)}.tiny{font-size:12.5px;color:var(--ink-3)}.mono{font-family:var(--f-mono)}
+h2{font-family:var(--f-disp);font-weight:800;font-size:26px;text-transform:uppercase;margin:0;letter-spacing:.02em;line-height:1.05}
+h3{font-family:var(--f-disp);font-weight:700;font-size:18px;text-transform:uppercase;margin:0;letter-spacing:.04em}
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:9px 14px;font-weight:600}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.sm{padding:6px 10px;font-size:13px}
+.chip{display:inline-flex;align-items:center;border-radius:4px;padding:2px 7px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.chip.gym{background:var(--gym-soft);color:var(--gym)}.chip.cancha{background:var(--cancha-soft);color:var(--cancha)}
+.grp-t{font-family:var(--f-disp);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:18px 2px 8px}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cat-b{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:16px 14px;text-align:left;font-family:var(--f-disp);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.02em;line-height:1.05;min-height:72px}
+.cat-b:hover{border-color:var(--ink-3)}
+.cat-b small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;text-transform:none;letter-spacing:0;color:var(--ink-3);margin-top:4px}
+.tabs{display:flex;gap:6px;margin:4px 0 14px}
+.tabs button{flex:1;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:10px;font-family:var(--f-disp);font-weight:700;font-size:17px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+.tabs button.on{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.rut-h{display:grid;gap:6px;margin-bottom:12px}
+.rut-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink-2)}
+.rut-meta b{color:var(--ink)}
+.wk{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wk-b{border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:5px 10px;font-weight:700;font-size:13px;color:var(--ink-2)}
+.wk-b.on{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.wk-b.now{position:relative}
+.wk-b.now::after{content:'';position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:var(--good)}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin:12px 0}
+.day-b{flex:0 0 auto;border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;text-align:left;line-height:1.15}
+.day-b b{display:block;font-family:var(--f-disp);font-size:17px;text-transform:uppercase;letter-spacing:.03em}
+.day-b small{font-size:12px;color:var(--ink-3)}
+.day-b.on{border-color:var(--accent);background:var(--accent-soft)}
+.day-b .hoy{display:inline-block;background:var(--good);color:#fff;border-radius:4px;font-size:10px;font-weight:700;padding:1px 5px;margin-left:4px;vertical-align:2px;text-transform:uppercase}
+.sec{display:grid;gap:4px;margin:10px 0}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.txt{white-space:pre-wrap}
+.blk{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface);margin-top:10px}
+.blk-h{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface-2)}
+.blk-l{width:30px;height:30px;border-radius:7px;background:var(--gym);color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-weight:800;font-size:19px;flex:0 0 30px}
+.blk-l.cancha{background:var(--cancha)}
+.blk-n{flex:1;font-family:var(--f-disp);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.blk-s{font-family:var(--f-disp);font-weight:700;font-size:15px;text-transform:uppercase;color:var(--ink-2)}
+.blk-nota{padding:6px 12px 0;font-size:13px;font-style:italic;color:var(--ink-2)}
+.ex{display:grid;grid-template-columns:28px minmax(0,1fr) auto;grid-template-areas:"i n p" "i a a";gap:4px 10px;padding:11px 12px;border-top:1px solid var(--line);align-items:center}
+.blk-h+.ex,.blk-nota+.ex{border-top:0}
+.ex-i{grid-area:i;font-family:var(--f-mono);font-size:12px;color:var(--ink-3);align-self:start;padding-top:3px}
+.ex-n{grid-area:n;font-weight:600;font-size:15.5px}
+.ex-n i{display:block;font-weight:400;font-size:13px;color:var(--ink-2)}
+.ex-p{grid-area:p;font-family:var(--f-disp);font-size:25px;font-weight:800;white-space:nowrap;text-align:right;line-height:1}
+.ex-p span{font-size:17px;color:var(--ink-3);margin:0 2px;font-weight:600}
+.ex-p.chg{color:var(--accent)}
+.ex-a{grid-area:a;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ex-c{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border-radius:5px;padding:2px 7px}
+.vid{border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:3px 9px;font-size:12.5px;font-weight:700}
+.reg{border:1px dashed var(--ink-3);background:none;color:var(--ink-2);border-radius:6px;padding:3px 9px;font-size:12.5px;font-weight:600}
+.empty{border:1.5px dashed var(--line);border-radius:12px;padding:26px 16px;text-align:center;color:var(--ink-2)}
+.empty b{display:block;font-family:var(--f-disp);font-size:21px;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
+.next{margin-top:14px}
+/* registros */
+.me{display:grid;gap:10px;margin-bottom:14px}
+.me-row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.fld{display:grid;gap:3px}
+.fld label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.fld input,.fld select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-width:0}
+.lifts{display:grid;gap:10px}
+.lift{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.lift-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.lift-h b{flex:1;font-family:var(--f-disp);font-size:20px;text-transform:uppercase;letter-spacing:.02em}
+.kpis{display:flex;gap:14px;flex-wrap:wrap}
+.kpi small{display:block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.kpi span{font-family:var(--f-disp);font-size:24px;font-weight:800;line-height:1.1}
+.kpi span.acc{color:var(--accent)}
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:2px;font-size:13px}
+.hist li{display:flex;gap:10px;align-items:center;padding:4px 0;border-top:1px solid var(--line)}
+.hist li span:first-child{width:70px;color:var(--ink-3)}
+.hist li .x{margin-left:auto;background:none;border:0;color:var(--ink-3);font-size:16px}
+.add-f{display:grid;grid-template-columns:1.2fr 1fr .8fr auto;gap:8px;align-items:end}
+@media (max-width:420px){.add-f{grid-template-columns:1fr 1fr 1fr}.add-f .btn{grid-column:1/-1}}
+/* video */
+.vmodal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:60;display:grid;place-items:center;padding:16px}
+.vbox{width:min(800px,100%);display:grid;gap:8px}
+.vbox iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#000}
+.vbox .btn{justify-self:end}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;z-index:80;box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+<header class="top"><button class="back" id="back" hidden aria-label="Volver">←</button><div class="ttl"><div class="eye" id="eye">Preparación física</div><h1 id="ttl">Rutinas</h1></div></header>
+<main class="wrap" id="app"><p class="muted">Cargando…</p></main>
+<div id="vroot"></div><div id="troot"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCqBNmrhDGKtuOzAgW9lSjwraSiXyYvg2o",
+  authDomain: "pizarra-pf.firebaseapp.com",
+  projectId: "pizarra-pf",
+  storageBucket: "pizarra-pf.firebasestorage.app",
+  messagingSenderId: "703419944880",
+  appId: "1:703419944880:web:2d58355ecf71cd11365075"
+};
+</script>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+/* --- copiado de Pizarra PF (misma lógica de rutinas y progresiones) --- */
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pISO=s=>{const a=String(s).split('-').map(Number);return new Date(a[0],a[1]-1,a[2]);};
+const TODAY=iso(new Date());
+const fmtD=(s,o)=>s?pISO(s).toLocaleDateString('es-AR',o||{weekday:'short',day:'numeric',month:'short'}):'';
+const daysBetween=(a,b)=>Math.round((pISO(b)-pISO(a))/864e5);
+const slug=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,60)||'x';
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const ls={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+const fmtN=v=>{const n=Number(v);return isNaN(n)?String(v):n.toLocaleString('es-AR',{maximumFractionDigits:2});};
+const WD=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+const WDL=['lunes','martes','miércoles','jueves','viernes','sábado','domingo'];
+const wdOf=f=>(pISO(f).getDay()+6)%7;
+const addDays=(f,n)=>{const d=pISO(f);d.setDate(d.getDate()+n);return iso(d);};
+const rutActive=(r,f)=>r.desde&&f>=r.desde&&(!r.hasta||f<=r.hasta);
+const weekIdx=(r,f)=>Math.max(0,Math.floor(daysBetween(r.desde,f)/7));
+const RX_PRES=/(\d{1,2})\s*[x×X*]\s*(\d+(?:[.,]\d+)?(?![\d.,]*\s*(?:kg|%|lb))\s*(?:''|"|″|′|'|s|seg|m|min)?(?:\s*[-\/,]\s*\d+(?:[.,]\d+)?(?![\d.,]*\s*(?:kg|%|lb))\s*(?:''|"|″|′|'|s|seg|m|min)?)*)/;
+const RX_SDE=/(\d{1,2})\s*series?\s*(?:de|x)\s*(\d+(?:\s*[-\/,]\s*\d+)*)/i;
+const RX_LIST=/(?:^|\s)(\d+(?:\s*[-\/]\s*\d+){1,11})(?=\s|$)/;
+function cleanDni(v){return String(v||'').replace(/\D/g,'');}
+function sha256(ascii){
+  const rr=(v,a)=>(v>>>a)|(v<<(32-a));const K=[],H=[];let n=2,c=0;
+  const isP=x=>{for(let f=2;f*f<=x;f++)if(x%f===0)return false;return true;};
+  while(c<64){if(isP(n)){if(c<8)H[c]=(Math.pow(n,1/2)*4294967296)|0;K[c]=(Math.pow(n,1/3)*4294967296)|0;c++;}n++;}
+  const bytes=unescape(encodeURIComponent(ascii));const words=[];const bl=bytes.length*8;
+  let m=bytes+'\x80';while(m.length%64-56)m+='\x00';
+  for(let i=0;i<m.length;i++)words[i>>2]|=m.charCodeAt(i)<<((3-i)%4)*8;
+  words[words.length]=(bl/4294967296)|0;words[words.length]=bl;
+  const h=H.slice();
+  for(let j=0;j<words.length;){
+    const w=words.slice(j,j+=16);const o=h.slice();
+    for(let i=0;i<64;i++){
+      const w15=w[i-15],w2=w[i-2];const a=h[0],e=h[4];
+      const t1=h[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&h[5])^(~e&h[6]))+K[i]+(w[i]=i<16?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);
+      const t2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&h[1])^(a&h[2])^(h[1]&h[2]));
+      h.unshift((t1+t2)|0);h[4]=(h[4]+t1)|0;h.pop();
+    }
+    for(let i=0;i<8;i++)h[i]=(h[i]+o[i])|0;
+  }
+  return h.map(x=>('00000000'+(x>>>0).toString(16)).slice(-8)).join('');
+}
+function dniHash(v){const d=cleanDni(v);return d?sha256('pizarra-pf|dni|'+d).slice(0,32):'';}
+function toBloques(s,tipo){
+  if(s.bloques&&s.bloques.length)return s.bloques;
+  if(s.ejercicios&&s.ejercicios.length)return [{nombre:'Bloque 1',series:'',nota:'',ejercicios:s.ejercicios.map(e=>({n:e.n||'',series:e.s||'',reps:[e.r||''],dist:false,c:e.c||'',link:''}))}];
+  return tipo==='gym'?[{nombre:'Bloque 1',series:'',nota:'',ejercicios:[{},{},{}]}]:[];
+}
+function rutDays(r){
+  if(r.sesiones&&r.sesiones.length)return r.sesiones;
+  const base={};['objetivo','duracion','rpe','calor','bloques','ejercicios','principal','calma','notas'].forEach(k=>{if(r[k]!=null)base[k]=r[k];});
+  if(base.ejercicios&&!base.bloques){base.bloques=toBloques(base,r.tipo);}delete base.ejercicios;
+  return (r.dias||[]).slice().sort((a,b)=>a.d-b.d).map((x,i)=>Object.assign(JSON.parse(JSON.stringify(base)),{nombre:'Día '+(i+1),d:x.d,hora:x.hora||''}));
+}
+function splitReps(str){return str.split(/\s*[-\/,]\s*/).map(x=>x.trim()).filter(Boolean);}
+function parseExercise(line){
+  const parts=line.split(/\s+\/\s+|\s*\|\s*/);
+  if(parts.length>1&&parts.slice(1).every(p=>/^\d{1,2}\s*[x×X*]\s*\d/.test(p.trim())||/^@?\s*\d+(?:[.,]\d+)?\s*(?:%|kg|x\s*pc|reps?)/i.test(p.trim())||/^\d{1,3}(?:\s*[-\/]\s*\d{1,3})*$/.test(p.trim()))){const e=parseExercise(parts[0]);e.prog=['',...parts.slice(1).map(x=>x.trim())];return e;}
+  let link='';
+  line=line.replace(/(https?:\/\/\S+|(?:www\.)?(?:youtu\.be|youtube\.com|drive\.google\.com)\/\S+)/i,m=>{link=m;return ' ';});
+  line=line.replace(/^\s*(?:[-•*·–]+|\d{1,2}[.)]|[a-z]\d{1,2}[.):-]?|[a-z][.)])\s+/i,'').trim();
+  let m,series='',reps=[],name=line,rest='',raw='',expl=false;
+  if((m=line.match(RX_PRES))){series=m[1];raw=m[2];expl=true;reps=splitReps(m[2]);name=line.slice(0,m.index);rest=line.slice(m.index+m[0].length);}
+  else if((m=line.match(RX_SDE))){series=m[1];raw=m[2];expl=true;reps=splitReps(m[2]);name=line.slice(0,m.index);rest=line.slice(m.index+m[0].length);}
+  else if((m=line.match(RX_LIST))){reps=splitReps(m[1]);series=String(reps.length);name=line.slice(0,m.index);rest=line.slice(m.index+m[0].length);}
+  else if((m=line.match(/\s[x×]\s*(\d+)\b/))){reps=[m[1]];name=line.slice(0,m.index);rest=line.slice(m.index+m[0].length);}
+  name=name.replace(/[\s:,\-–(]+$/,'').trim();
+  const c=rest.replace(/^[\s,;:\-–@)]+/,'').replace(/[\s,;(]+$/,'').trim();
+  /* "3x8-8" (por lado) o "3x12/15" (rango): si la cantidad no coincide con las series, se respeta tal cual */
+  if(expl&&reps.length>1&&reps.length!==+series)return {n:name,series,reps:[raw.replace(/\s+/g,'').trim()],dist:false,c,link};
+  const uniq=[...new Set(reps)];
+  const dist=reps.length>1&&uniq.length>1;
+  return {n:name,series,reps:dist?reps:[uniq[0]||''],dist,c,link};
+}
+function applyProg(e,b,txt){
+  const o=Object.assign({},e);txt=String(txt).trim();
+  const p=parseExercise('X '+txt);
+  if(!p.series&&!(p.reps.length>1||p.reps[0]!=='')){
+    /* la semana solo cambia reps ("12 reps") o carga ("75%", "80kg", "1.5xPC") */
+    /* "6" o "6 reps" = repeticiones; "6 reps 80kg" = reps + carga */
+    const m=txt.match(/^(\d{1,3})(?:\s*(?:reps?|repeticiones)\b\s*(.*))?$/i);
+    if(m){o.reps=[m[1]];o.dist=false;if(m[2]&&m[2].trim())o.c=m[2].replace(/^[\s,;:\-–@]+/,'').trim();}
+    else o.c=txt.replace(/^@\s*/,'');
+    return o;
+  }
+  /* solo reps sin "x" (ej. "8-8", "12/15", "8-6-4"): si la cantidad no coincide con las series, es por lado o rango */
+  const lm=txt.match(/^(\d+(?:\s*[-\/,]\s*\d+)+)/);
+  if(!/[x×*]/i.test(txt)&&lm){
+    const eff=+(e.series||b.series||0),n=lm[1].split(/\s*[-\/,]\s*/).length;
+    if(eff&&n!==eff){o.reps=[lm[1].replace(/\s+/g,'')];o.dist=false;const rest=txt.slice(lm[0].length).replace(/^[\s,;:\-–@]+/,'').trim();if(rest)o.c=rest;return o;}
+  }
+  if(p.series)o.series=p.series;
+  const hasR=p.reps.length>1||p.reps[0]!=='';
+  if(hasR){o.reps=p.reps;o.dist=p.reps.length>1;if(!p.series&&o.dist)o.series=String(p.reps.length);}
+  if(p.c)o.c=p.c;
+  return o;
+}
+function resolveDay(dd,w){
+  const c=JSON.parse(JSON.stringify(dd));
+  (c.bloques||[]).forEach(b=>{b.ejercicios=(b.ejercicios||[]).map(e=>{
+    const pr=e.prog||[];let t='';
+    for(let j=Math.min(w,pr.length-1);j>=1;j--){if(pr[j]){t=pr[j];break;}}
+    const o=t?applyProg(e,b,t):Object.assign({},e);
+    if(t&&w>0)o.progW=1;delete o.prog;return o;
+  });});
+  return c;
+}
+function presText(e,b){
+  const ser=e.series||b.series||'';const reps=(e.reps||[]).filter(v=>v!=='');
+  const r=reps.length?(e.dist?reps.join('-'):reps[0]):'';
+  return ser&&r?ser+'×'+r:(r||(ser?ser+' series':''));
+}
+function fixUrl(u){u=String(u||'').trim();if(!u)return '';return /^https?:\/\//i.test(u)?u:'https://'+u;}
+function toast(m){$('#troot').innerHTML='<div class="toast">'+esc(m)+'</div>';clearTimeout(toast.t);toast.t=setTimeout(()=>{$('#troot').innerHTML='';},2200);}
+
+/* ---------- datos (solo lectura): categorías, rutinas y asignaciones ---------- */
+const D={cats:[],rut:[],asig:[],ready:{c:0,r:0,a:0}};
+function watch(coll,cb){
+  if(window.firebase&&FIREBASE_CONFIG.apiKey){
+    return firebase.firestore().collection(coll).onSnapshot(s=>cb(s.docs.map(d=>Object.assign({id:d.id},d.data()))),e=>{console.warn(e);$('#app').innerHTML='<div class="empty"><b>No se pudo conectar</b>Revisá tu conexión e intentá de nuevo.</div>';});
+  }
+  /* sin Firebase (prueba local): lee lo que guardó Pizarra PF en este navegador */
+  const L=ls.get('pfclub-local',{})[coll]||{};cb(Object.keys(L).map(id=>Object.assign({id},L[id])));
+}
+const rutById=id=>D.rut.find(r=>r.id===id)||null;
+const catById=id=>D.cats.find(c=>c.id===id)||null;
+function asigFor(cat){
+  return D.asig.filter(a=>a.cat===cat&&(!a.hasta||a.hasta>=TODAY)&&rutById(a.rutina)).sort((a,b)=>a.desde.localeCompare(b.desde));
+}
+const presHtml=(e,b)=>{const t=presText(e,b);if(!t)return '';const i=t.indexOf('×');return i<0?esc(t):esc(t.slice(0,i))+'<span>×</span>'+esc(t.slice(i+1));};
+function ytEmbed(u){u=String(u||'');let m=u.match(/youtu\.be\/([\w-]{6,})/)||u.match(/[?&]v=([\w-]{6,})/)||u.match(/youtube\.com\/(?:shorts|embed)\/([\w-]{6,})/);return m?'https://www.youtube.com/embed/'+m[1]+'?autoplay=1&rel=0':null;}
+
+/* ---------- estado ---------- */
+const st={cat:null,tab:'rutina',asig:null,day:null,week:null};
+/* Si entran con el link de una categoría (atletas.html#u15-a) quedan fijos en esa: no ven el menú de todas */
+const LOCK=decodeURIComponent((location.hash||'').slice(1))||'';
+function go(cat){st.cat=cat;st.tab='rutina';st.asig=null;st.day=null;st.week=null;ls.set('pfat-cat',cat||'');try{history.replaceState(null,'',cat?'#'+cat:location.pathname);}catch(e){}render();window.scrollTo(0,0);}
+$('#back').onclick=()=>{if(!LOCK)go(null);};
+
+function render(){
+  if(!(D.ready.c&&D.ready.r&&D.ready.a))return;
+  const c=st.cat&&catById(st.cat);
+  if(!c){if(LOCK)return noCat();st.cat=null;return home();}
+  $('#back').hidden=!!LOCK;$('#eye').textContent=c.grupo||'Categoría';$('#ttl').textContent=c.nombre;
+  let h='<div class="tabs"><button class="'+(st.tab==='rutina'?'on':'')+'" data-tab="rutina">Rutina actual</button><button class="'+(st.tab==='reg'?'on':'')+'" data-tab="reg">Mis registros</button></div>';
+  h+=st.tab==='reg'?regView():rutView(c);
+  $('#app').innerHTML=h;
+}
+function noCat(){
+  $('#back').hidden=true;$('#eye').textContent='Preparación física';$('#ttl').textContent='Rutina';
+  $('#app').innerHTML='<div class="empty"><b>No encontramos tu categoría</b>Pedile a tu preparadora física que te mande el link de nuevo.</div>';
+}
+function home(){
+  $('#back').hidden=true;$('#eye').textContent='Preparación física';$('#ttl').innerHTML='Elegí tu <b>categoría</b>';
+  const groups={};D.cats.slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(c=>{(groups[c.grupo||'Otras']=groups[c.grupo||'Otras']||[]).push(c);});
+  let h='';
+  Object.keys(groups).forEach(g=>{
+    h+='<div class="grp-t">'+esc(g)+'</div><div class="cat-grid">'+groups[g].map(c=>{const n=asigFor(c.id).filter(a=>a.desde<=TODAY).length;
+      return '<button class="cat-b" data-cat="'+esc(c.id)+'">'+esc(c.nombre)+'<small>'+(n?'Rutina vigente':'Sin rutina cargada')+'</small></button>';}).join('')+'</div>';
+  });
+  $('#app').innerHTML=h||'<div class="empty"><b>Todavía no hay categorías</b></div>';
+}
+
+/* ---------- rutina actual ---------- */
+function rutView(c){
+  const list=asigFor(c.id);const cur=list.filter(a=>a.desde<=TODAY);const prox=list.filter(a=>a.desde>TODAY);
+  if(!list.length)return '<div class="empty"><b>Todavía no hay rutina</b>Cuando tu preparadora física cargue una, la vas a ver acá.</div>';
+  const pick=(st.asig&&list.find(a=>a.id===st.asig))||cur[cur.length-1]||prox[0];st.asig=pick.id;
+  let h='';
+  if(list.length>1)h+='<div class="days" style="margin-top:0">'+list.map(a=>{const r=rutById(a.rutina);return '<button class="day-b'+(a.id===pick.id?' on':'')+'" data-asig="'+esc(a.id)+'"><b>'+esc(r.nombre)+'</b><small>'+(a.desde>TODAY?'Empieza '+esc(fmtD(a.desde,{day:'numeric',month:'short'})):'Vigente')+'</small></button>';}).join('')+'</div>';
+  const r=rutById(pick.rutina);const ds=rutDays(r);
+  const W=pick.semanas||r.semanas||4;
+  const nowW=pick.desde<=TODAY?Math.min(weekIdx(pick,TODAY),Math.max(W-1,0)):0;
+  if(st.week==null)st.week=nowW;
+  /* día por defecto: el de hoy, si no el próximo que entrenan */
+  const wd=wdOf(TODAY);
+  if(st.day==null){let best=0,bd=99;(pick.horario||[]).forEach((x,i)=>{if(x&&x.d!=null){const dd=(x.d-wd+7)%7;if(dd<bd){bd=dd;best=i;}}});st.day=Math.min(best,ds.length-1);}
+  const d=ds[st.day]||ds[0];
+  h+='<div class="rut-h"><h2>'+esc(r.nombre)+'</h2><div class="rut-meta"><span class="chip '+r.tipo+'">'+(r.tipo==='gym'?'Gimnasio':'Cancha')+'</span>'+
+    '<span>'+(pick.desde>TODAY?'Empieza el <b>'+esc(fmtD(pick.desde,{weekday:'long',day:'numeric',month:'long'}))+'</b>':'Semana <b>'+(nowW+1)+'</b> de '+W)+'</span>'+
+    (pick.hasta?'<span>Hasta el '+esc(fmtD(pick.hasta,{day:'numeric',month:'short'}))+'</span>':'')+'</div>';
+  if(W>1)h+='<div class="wk"><span class="tiny">Ver semana:</span>'+Array.from({length:W},(_,i)=>'<button class="wk-b'+(i===st.week?' on':'')+(i===nowW&&pick.desde<=TODAY?' now':'')+'" data-week="'+i+'">'+(i+1)+'</button>').join('')+'</div>';
+  h+='</div>';
+  h+='<div class="days">'+ds.map((x,i)=>{const hh=(pick.horario||[])[i]||{};const isHoy=hh.d===wd&&pick.desde<=TODAY;
+    return '<button class="day-b'+(i===st.day?' on':'')+'" data-day="'+i+'"><b>'+esc(x.nombre||('Día '+(i+1)))+(isHoy?'<span class="hoy">hoy</span>':'')+'</b><small>'+(hh.d!=null?WDL[hh.d]:'')+(hh.hora?' · '+esc(hh.hora):'')+'</small></button>';}).join('')+'</div>';
+  const rd=resolveDay(d,st.week);
+  if(rd.objetivo)h+='<div class="sec"><span class="lbl">Objetivo</span><b>'+esc(rd.objetivo)+'</b></div>';
+  if(rd.calor)h+='<div class="sec card"><span class="lbl">Entrada en calor</span><div class="txt">'+esc(rd.calor)+'</div></div>';
+  const bl=toBloques(rd,r.tipo).filter(b=>(b.ejercicios||[]).some(e=>e.n));
+  bl.forEach((b,bi)=>{const L=String.fromCharCode(65+bi);
+    h+='<div class="blk"><div class="blk-h"><span class="blk-l '+r.tipo+'">'+L+'</span><span class="blk-n">'+esc(b.nombre||('Bloque '+(bi+1)))+'</span>'+(b.series?'<span class="blk-s">'+esc(b.series)+' series</span>':'')+'</div>'+
+      (b.nota?'<div class="blk-nota">'+esc(b.nota)+'</div>':'')+
+      (b.ejercicios||[]).filter(e=>e.n).map((e,ei)=>'<div class="ex"><span class="ex-i">'+L+(ei+1)+'</span><span class="ex-n">'+esc(e.n)+(e.obs?'<i>'+esc(e.obs)+'</i>':'')+'</span>'+
+        '<span class="ex-p'+(e.progW?' chg':'')+'">'+presHtml(e,b)+'</span>'+
+        '<span class="ex-a">'+(e.c?'<span class="ex-c">'+esc(e.c)+'</span>':'')+(e.link?'<button class="vid" data-vid="'+esc(fixUrl(e.link))+'">▶ Video</button>':'')+'<button class="reg" data-regex="'+esc(e.n)+'">+ Anotar mi peso</button></span></div>').join('')+'</div>';});
+  if(rd.principal)h+='<div class="sec card"><span class="lbl">Parte principal</span><div class="txt">'+esc(rd.principal)+'</div></div>';
+  if(rd.calma)h+='<div class="sec card"><span class="lbl">Vuelta a la calma</span><div class="txt">'+esc(rd.calma)+'</div></div>';
+  if(rd.notas)h+='<div class="sec card"><span class="lbl">Notas</span><div class="txt">'+esc(rd.notas)+'</div></div>';
+  if(!bl.length&&!rd.calor&&!rd.principal)h+='<div class="empty"><b>Día sin ejercicios cargados</b></div>';
+  if(prox.length&&pick.desde<=TODAY)h+='<p class="tiny next">Próxima rutina: '+prox.map(a=>esc(rutById(a.rutina).nombre)+' (desde el '+esc(fmtD(a.desde,{day:'numeric',month:'short'}))+')').join(', ')+'</p>';
+  return h;
+}
+
+/* ---------- mis registros: en el celular + copia en la nube para tu preparadora ---------- */
+const BASE_EX=['Sentadilla','Peso muerto','Banco plano','Hip thrust','Press militar'];
+const FB=()=>!!(window.firebase&&FIREBASE_CONFIG.apiKey);
+function getReg(){
+  let R=ls.get('pfat-reg',null);
+  if(!R){/* versión anterior: un registro por categoría → se juntan */
+    R={ex:[],log:{},pc:''};
+    try{Object.keys(localStorage).filter(k=>k.indexOf('pfat-reg-')===0).forEach(k=>{const o=ls.get(k,{});(o.ex||[]).forEach(x=>{if(!R.ex.includes(x))R.ex.push(x);});Object.keys(o.log||{}).forEach(x=>{R.log[x]=(R.log[x]||[]).concat(o.log[x]);});if(o.pc&&!R.pc)R.pc=o.pc;});}catch(e){}
+  }
+  R.log=R.log||{};R.ex=R.ex||[];return R;
+}
+let myUid=null,syncT=null;
+function setReg(R){R.upd=Date.now();ls.set('pfat-reg',R);clearTimeout(syncT);syncT=setTimeout(()=>pushCloud(R),400);}
+function pushCloud(R){
+  R=R||getReg();if(!R.nombre)return;
+  const doc={nombre:R.nombre,nom:R.nom||'',ape:R.ape||'',dniH:R.dniH||'',dniFin:R.dniFin||'',cat:st.cat||R.cat||'',pc:R.pc||'',log:R.log,ex:R.ex,upd:R.upd||Date.now()};
+  if(FB()){if(!myUid)return;firebase.firestore().collection('registrosAtletas').doc(myUid).set(doc).catch(e=>console.warn('sync',e));}
+  else{/* prueba local: lo deja donde lo lee Pizarra PF */const L=ls.get('pfclub-local',{});L.registrosAtletas=L.registrosAtletas||{};L.registrosAtletas[ls.get('pfat-uid','')||(()=>{const u='loc'+uid();ls.set('pfat-uid',u);return u;})()]=doc;ls.set('pfclub-local',L);}
+}
+const epley=(kg,r)=>r>1?kg*(1+r/30):kg;
+function profileForm(R){
+  return '<div class="card me"><h3>Tus datos</h3><p class="tiny" style="margin:0">Antes de anotar tus pesos, completá tus datos. Así tu preparadora física sabe que sos vos. Solo los ve ella.</p>'+
+    '<div class="fld"><label for="pn">Nombre</label><input id="pn" autocomplete="given-name" value="'+esc(R.nom||(R.ape?'':R.nombre)||'')+'" placeholder="Ej: Gian Franco"></div>'+
+    '<div class="fld"><label for="pa">Apellido</label><input id="pa" autocomplete="family-name" value="'+esc(R.ape||'')+'" placeholder="Ej: Gasparini"></div>'+
+    '<div class="fld"><label for="pd">DNI (solo números)</label><input id="pd" inputmode="numeric" autocomplete="off" placeholder="'+(R.dniFin?'Cargado: …'+esc(R.dniFin)+' (escribí otro para cambiarlo)':'Ej: 45123456')+'"></div>'+
+    '<button class="btn pri" id="psave">Guardar mis datos</button><p class="tiny" style="margin:0">Podés poner el DNI con o sin puntos. No se guarda escrito: se usa solo para reconocerte.</p></div>';
+}
+function regView(){
+  const R=getReg();
+  if(!R.nombre||!R.ape||!R.dniH||st.editProf)return profileForm(R);
+  const exs=[...new Set(BASE_EX.concat(R.ex||[]).concat(Object.keys(R.log||{})))];
+  const sel=st.regEx||exs[0];
+  let h='<div class="card me"><div class="me-row" style="justify-content:space-between;align-items:center"><span><b>'+esc(R.nombre)+'</b>'+(R.dniFin?' <span class="tiny">· DNI …'+esc(R.dniFin)+'</span>':'')+'</span><button class="btn sm" id="pedit">Editar mis datos</button></div>'+
+    '<div class="me-row"><div class="fld" style="flex:1;min-width:140px"><label for="pc">Mi peso corporal (kg)</label><input id="pc" type="number" inputmode="decimal" step="any" value="'+esc(R.pc||'')+'" placeholder="Opcional"></div></div>'+
+    '<div class="add-f"><div class="fld"><label for="rx">Ejercicio</label><select id="rx">'+exs.map(x=>'<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>').join('')+'<option value="__otro">Otro…</option></select></div>'+
+    '<div class="fld"><label for="rk">Kilos</label><input id="rk" type="number" inputmode="decimal" step="any" placeholder="60"></div>'+
+    '<div class="fld"><label for="rr">Reps</label><input id="rr" type="number" inputmode="numeric" placeholder="1" min="1" max="20"></div>'+
+    '<button class="btn pri" id="radd">Anotar</button></div><div class="fld" id="rxoBox" hidden><label for="rxo">Nombre del ejercicio</label><input id="rxo" placeholder="Ej: Remo con barra"></div>'+
+    '<p class="tiny" style="margin:0">Con más de 1 rep te calculamos tu 1RM estimado (fórmula de Epley). Tu preparadora física ve lo que anotás.</p></div>';
+  const withData=exs.filter(x=>(R.log[x]||[]).length);
+  if(!withData.length)return h+'<div class="empty"><b>Todavía no anotaste nada</b>Anotá el peso que levantaste y acá vas a ver tu progreso.</div>';
+  h+='<div class="lifts">'+withData.map(x=>{
+    const L=(R.log[x]||[]).slice().sort((a,b)=>b.f.localeCompare(a.f));
+    const best=Math.max(...L.map(e=>epley(e.kg,e.r)));const last=L[0];const pc=Number(R.pc)||0;
+    return '<div class="lift"><div class="lift-h"><b>'+esc(x)+'</b><span class="tiny">'+L.length+(L.length===1?' registro':' registros')+'</span></div>'+
+      '<div class="kpis"><div class="kpi"><small>Último</small><span>'+fmtN(last.kg)+' kg × '+last.r+'</span></div><div class="kpi"><small>Mejor 1RM</small><span class="acc">'+(L.some(e=>e.r>1&&epley(e.kg,e.r)===best)?'≈':'')+fmtN(Math.round(best*10)/10)+' kg</span></div>'+
+      (pc?'<div class="kpi"><small>× peso corporal</small><span>'+(best/pc).toFixed(2)+'×</span></div>':'')+'</div>'+
+      '<ul class="hist">'+L.map(e=>'<li><span>'+esc(fmtD(e.f,{day:'numeric',month:'short'}))+'</span><span class="mono">'+fmtN(e.kg)+' kg × '+e.r+'</span><span class="tiny">1RM '+(e.r>1?'≈':'')+fmtN(Math.round(epley(e.kg,e.r)*10)/10)+'</span><button class="x" data-del="'+esc(x)+'|'+e.id+'" aria-label="Borrar">×</button></li>').join('')+'</ul></div>';
+  }).join('')+'</div>';
+  return h;
+}
+function saveProfile(){
+  const nm=$('#pn').value.trim().replace(/\s+/g,' '),ap=$('#pa').value.trim().replace(/\s+/g,' ');const dRaw=$('#pd').value;const d=cleanDni(dRaw);
+  if(!nm){toast('Poné tu nombre');$('#pn').focus();return;}
+  if(!ap){toast('Poné tu apellido');$('#pa').focus();return;}
+  const n=nm+' '+ap;
+  const R=getReg();
+  if(d){if(d.length<7||d.length>9){toast('El DNI tiene que tener 7 u 8 números');return;}R.dniH=dniHash(d);R.dniFin=d.slice(-3);}
+  else if(!R.dniH){toast('Poné tu DNI (solo números)');return;}
+  R.nombre=n;R.nom=nm;R.ape=ap;R.cat=st.cat;st.editProf=false;setReg(R);render();toast('Listo, '+n.split(' ')[0]+'. Ya podés anotar tus pesos');
+}
+function addReg(){
+  let x=$('#rx').value;
+  if(x==='__otro'){x=($('#rxo').value||'').trim();if(!x){toast('Escribí el nombre del ejercicio');$('#rxo').focus();return;}}
+  const kg=Number(String($('#rk').value).replace(',','.')),r=Math.max(1,parseInt($('#rr').value)||1);
+  if(!(kg>0)){toast('Poné los kilos');return;}
+  const R=getReg();(R.log[x]=R.log[x]||[]).push({id:uid(),f:TODAY,kg,r});if(!BASE_EX.includes(x)&&!R.ex.includes(x))R.ex.push(x);
+  R.cat=st.cat;setReg(R);st.regEx=x;render();toast('Anotado: '+x+' '+fmtN(kg)+' kg × '+r);
+}
+
+/* ---------- eventos ---------- */
+$('#app').addEventListener('click',e=>{
+  const t=e.target.closest('[data-cat],[data-tab],[data-asig],[data-day],[data-week],[data-vid],[data-regex],[data-del],#radd,#psave,#pedit');if(!t)return;
+  if(t.id==='psave')return saveProfile();
+  if(t.id==='pedit'){st.editProf=true;return render();}
+  const d=t.dataset;
+  if(d.cat)return go(d.cat);
+  if(d.tab){st.tab=d.tab;return render();}
+  if(d.asig){st.asig=d.asig;st.day=null;st.week=null;return render();}
+  if(d.day){st.day=+d.day;return render();}
+  if(d.week){st.week=+d.week;return render();}
+  if(d.vid){const em=ytEmbed(d.vid);if(em){$('#vroot').innerHTML='<div class="vmodal" id="vm"><div class="vbox"><iframe src="'+esc(em)+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Video del ejercicio"></iframe><button class="btn" id="vclose">Cerrar video</button></div></div>';
+      $('#vm').onclick=ev=>{if(ev.target.id==='vm'||ev.target.id==='vclose')$('#vroot').innerHTML='';};}
+    else window.open(d.vid,'_blank','noopener');return;}
+  if(d.regex){st.tab='reg';st.regEx=d.regex;const R=getReg();if(!BASE_EX.includes(d.regex)&&!R.ex.includes(d.regex)){R.ex.push(d.regex);ls.set('pfat-reg',R);}render();window.scrollTo(0,0);setTimeout(()=>{const k=$('#rk');if(k)k.focus();},50);return;}
+  if(d.del){const [x,id]=d.del.split('|');const R=getReg();R.log[x]=(R.log[x]||[]).filter(z=>z.id!==id);setReg(R);return render();}
+  if(t.id==='radd')return addReg();
+});
+$('#app').addEventListener('change',e=>{if(e.target.id==='pc'){const R=getReg();R.pc=e.target.value;setReg(R);render();}
+  if(e.target.id==='rx'){const o=e.target.value==='__otro';$('#rxoBox').hidden=!o;if(o)$('#rxo').focus();else st.regEx=e.target.value;}});
+
+/* ---------- arranque ---------- */
+if(FB()){firebase.initializeApp(FIREBASE_CONFIG);try{firebase.firestore().enablePersistence({synchronizeTabs:true}).catch(()=>{});}catch(e){}
+  /* identificación anónima: cada celular escribe solo sus propios registros */
+  firebase.auth().onAuthStateChanged(async u=>{
+    if(!u){firebase.auth().signInAnonymously().catch(e=>console.warn('anon',e));return;}
+    myUid=u.uid;
+    try{const snap=await firebase.firestore().collection('registrosAtletas').doc(myUid).get();
+      const R=getReg();
+      if(snap.exists&&!Object.keys(R.log).some(k=>R.log[k].length)&&!R.nombre){const c=snap.data();ls.set('pfat-reg',{nombre:c.nombre,dniH:c.dniH,dniFin:c.dniFin,pc:c.pc,log:c.log||{},ex:c.ex||[],upd:c.upd});render();}
+      else if(R.nombre)pushCloud(R);
+    }catch(e){console.warn(e);}
+  });
+}
+const fromHash=decodeURIComponent((location.hash||'').slice(1));
+st.cat=LOCK||fromHash||ls.get('pfat-cat','')||null;
+watch('categorias',a=>{D.cats=a;D.ready.c=1;render();});
+watch('rutinas',a=>{D.rut=a;D.ready.r=1;render();});
+watch('asignaciones',a=>{D.asig=a;D.ready.a=1;render();});
+window.addEventListener('hashchange',()=>{if(LOCK)return;const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==st.cat)go(h);});
+})();
+</script>
+</body>
+</html>
