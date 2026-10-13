@@ -8,6 +8,19 @@
 <script>(function(){try{var t=JSON.parse(localStorage.getItem('pf-theme')||'null');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 
 <title>CVM · Rutinas</title>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://securetoken.googleapis.com" crossorigin>
+<link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+<link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
+<link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest-atletas.json">
+<link rel="apple-touch-icon" href="icon-cvm-192.png">
+<meta name="apple-mobile-web-app-title" content="CVM Rutinas">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
@@ -144,7 +157,7 @@ h3{font-family:var(--f-disp);font-weight:700;font-size:18px;text-transform:upper
 </head>
 <body>
 <header class="top"><button class="back" id="back" hidden aria-label="Volver">←</button><img class="crest" alt="" src="data:image/png;base64,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"><div class="ttl"><div class="eye" id="eye">Club Villa Mitre</div><h1 id="ttl">Rutinas</h1></div><button class="theme-b" id="themeBtn" type="button"></button></header>
-<main class="wrap" id="app"><p class="muted">Cargando…</p></main>
+<main class="wrap" id="app"><p class="muted" style="text-align:center;margin-top:40px">Cargando tu rutina…</p></main>
 <div id="vroot"></div><div id="troot"></div>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -309,7 +322,7 @@ paintThemeBtn();
 /* ---------- estado ---------- */
 const st={cat:null,tab:'rutina',asig:null,day:null,week:null};
 /* Si entran con el link de una categoría (atletas.html#u15-a) quedan fijos en esa: no ven el menú de todas */
-const LOCK=decodeURIComponent((location.hash||'').slice(1))||'';
+const LOCK=(()=>{const h=decodeURIComponent((location.hash||'').slice(1))||'';try{if(h==='todas'){localStorage.removeItem('pfat-lock');return '';}if(h)localStorage.setItem('pfat-lock',h);else return localStorage.getItem('pfat-lock')||'';}catch(e){}return h;})();
 function go(cat){st.cat=cat;st.tab='rutina';st.asig=null;st.day=null;st.week=null;ls.set('pfat-cat',cat||'');try{history.replaceState(null,'',cat?'#'+cat:location.pathname);}catch(e){}render();window.scrollTo(0,0);}
 $('#back').onclick=()=>{if(!LOCK)go(null);};
 
@@ -482,12 +495,13 @@ if(FB()){firebase.initializeApp(FIREBASE_CONFIG);try{firebase.firestore().enable
   });
 }
 const fromHash=decodeURIComponent((location.hash||'').slice(1));
-st.cat=LOCK||fromHash||ls.get('pfat-cat','')||null;
+st.cat=LOCK||(fromHash==='todas'?'':fromHash)||(fromHash==='todas'?null:ls.get('pfat-cat',''))||null;
 watch('categorias',a=>{D.cats=a;D.ready.c=1;render();});
 watch('rutinas',a=>{D.rut=a;D.ready.r=1;render();});
 watch('asignaciones',a=>{D.asig=a;D.ready.a=1;render();});
 window.addEventListener('hashchange',()=>{if(LOCK)return;const h=decodeURIComponent(location.hash.slice(1));if(h&&h!==st.cat)go(h);});
 })();
 </script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
 </body>
 </html>
