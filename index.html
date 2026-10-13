@@ -684,7 +684,7 @@ body.ro .modal-b input::placeholder,body.ro .modal-b textarea::placeholder{color
       <div class="bk"><button class="btn-side" type="button" id="expBtn">Descargar respaldo</button><button class="btn-side" type="button" id="impBtn">Importar</button></div>
       <input type="file" id="impFile" accept=".json,application/json" hidden>
       <button class="btn-side theme-btn" type="button" id="themeBtn"></button>
-      <div class="ver" title="Si no ves esta fecha, recargá la página">Versión 13 oct 2026 · Training Pro · espacio CVM · biblioteca v2</div>
+      <div class="ver" title="Si no ves esta fecha, recargá la página">Versión 14 oct 2026 · Training Pro · espacio CVM · carga rápida</div>
       <div class="status" id="status"><i></i><span>Conectando…</span></div>
     </div>
   </aside>
@@ -759,8 +759,9 @@ const Store={
     if(!FIREBASE_CONFIG.apiKey||typeof firebase==='undefined'){this.mode='local';return;}
     firebase.initializeApp(FIREBASE_CONFIG);
     this.fs=firebase.firestore();
-    /* en algunos celulares (sobre todo iPhone) esto puede quedar colgado: no lo esperamos más de 2,5 s */
-    try{await Promise.race([this.fs.enablePersistence({synchronizeTabs:true}),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
+    /* la pestaña que se abre última es la que manda (si quedó otra abierta y dormida en el celu, ya no traba esta).
+       En algunos celulares esto puede quedar colgado: no lo esperamos más de 2,5 s */
+    try{await Promise.race([this.fs.enablePersistence({experimentalForceOwningTab:true}),new Promise(r=>setTimeout(r,2500))]);}catch(e){}
     this.mode='cloud';
   },
   watch(coll,field,val,cb){

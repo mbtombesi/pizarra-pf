@@ -482,7 +482,7 @@ $('#app').addEventListener('change',e=>{if(e.target.id==='pc'){const R=getReg();
   if(e.target.id==='rx'){const o=e.target.value==='__otro';$('#rxoBox').hidden=!o;if(o)$('#rxo').focus();else st.regEx=e.target.value;}});
 
 /* ---------- arranque ---------- */
-if(FB()){firebase.initializeApp(FIREBASE_CONFIG);try{firebase.firestore().enablePersistence({synchronizeTabs:true}).catch(()=>{});}catch(e){}
+if(FB()){firebase.initializeApp(FIREBASE_CONFIG);try{firebase.firestore().enablePersistence({experimentalForceOwningTab:true}).catch(()=>{});}catch(e){}
   /* identificación anónima: cada celular escribe solo sus propios registros */
   firebase.auth().onAuthStateChanged(async u=>{
     if(!u){firebase.auth().signInAnonymously().catch(e=>console.warn('anon',e));return;}
