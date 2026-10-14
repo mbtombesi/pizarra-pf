@@ -520,6 +520,8 @@ a.cat-btn{text-decoration:none}
 .lib-main{display:flex;align-items:center;gap:8px;min-width:0;background:none;border:0;padding:4px 0;text-align:left}
 .lib-main b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lib-main .tiny{white-space:nowrap}
+.mod-t{font-size:11px;color:var(--ink-3);white-space:nowrap;font-family:var(--f-mono)}
+.lib-main .mod-t{margin-left:2px}
 .lib-cats{display:flex;gap:4px;flex-wrap:wrap;min-width:0}
 .lib-acts{display:flex;gap:4px;justify-content:flex-end;flex-wrap:wrap}
 @media (max-width:860px){.lib-row{grid-template-columns:1fr}.lib-acts{justify-content:flex-start}}
@@ -684,7 +686,7 @@ body.ro .modal-b input::placeholder,body.ro .modal-b textarea::placeholder{color
       <div class="bk"><button class="btn-side" type="button" id="expBtn">Descargar respaldo</button><button class="btn-side" type="button" id="impBtn">Importar</button></div>
       <input type="file" id="impFile" accept=".json,application/json" hidden>
       <button class="btn-side theme-btn" type="button" id="themeBtn"></button>
-      <div class="ver" title="Si no ves esta fecha, recargá la página">Versión 14 oct 2026 · Training Pro · espacio CVM · carga rápida</div>
+      <div class="ver" title="Si no ves esta fecha, recargá la página">Versión 14 oct 2026 · Training Pro · espacio CVM · carga rápida · últ. mod.</div>
       <div class="status" id="status"><i></i><span>Conectando…</span></div>
     </div>
   </aside>
@@ -769,7 +771,7 @@ const Store={
       let q=this.fs.collection(coll); if(field) q=q.where(field,'==',val);
       const sub={coll,field,val,cb,un:null,dead:false,fails:0};
       sub.start=()=>{sub.dead=false;sub.un=q.onSnapshot(s=>{sub.fails=0;cb(s.docs.map(d=>Object.assign({id:d.id},d.data())));},
-        e=>{console.warn(coll,e);sub.dead=true;sub.fails++;
+        e=>{console.warn(coll,e);sub.dead=true;sub.fails++;sub.code=e&&e.code;
           if(e&&e.code==='permission-denied'&&RO)return roBlocked();
           if(e&&e.code==='permission-denied'&&sub.fails>=3)handleErr(e);
           NET.upd();NET.retry();});};
@@ -810,6 +812,8 @@ const Store={
 function handleErr(e){
   const c=e&&e.code;
   if(c==='permission-denied'&&RO) return roBlocked();
+  if(c==='permission-denied'&&Store.mode==='cloud'){const u=firebase.auth().currentUser;
+    $('#banner').innerHTML='<div class="banner" style="border-color:var(--bad);background:var(--bad-soft)"><b>No se guardó.</b> La cuenta '+esc(u&&u.email?u.email:'con la que entraste')+' no tiene permiso para cargar datos. Tocá <b>Salir</b> (abajo del menú) y entrá con la cuenta autorizada.</div>';}
   if(c==='permission-denied') toast('Tu cuenta no tiene permiso. Revisá las reglas de Firebase.');
   else if(c==='resource-exhausted') toast('Se llegó al límite gratuito de Firebase por hoy.');
   else toast('No se pudo guardar. Probá de nuevo.');
@@ -831,6 +835,7 @@ const NET={on:false,cache:true,pend:false,t0:Date.now(),rt:null,wait:4000,
     const off=!navigator.onLine||(this.cache&&Date.now()-this.t0>6000);const dead=Store.csubs.some(x=>x.dead);
     let ok=false,txt;
     if(!navigator.onLine)txt=this.pend?'Sin internet · hay cambios esperando para subirse':'Sin internet · lo que cargues se sube cuando vuelva';
+    else if(Store.csubs.some(x=>x.dead&&x.code==='permission-denied'))txt='Sin permiso: '+(u&&u.email?u.email:'esta cuenta')+' no está autorizada. Tocá Salir y entrá con la cuenta correcta';
     else if(dead)txt='Reconectando…';
     else if(off)txt=this.cache&&Date.now()-this.t0<=6000?'Conectando…':(this.pend?'Sin conexión · hay cambios esperando para subirse':'Sin conexión con la nube');
     else if(this.cache)txt='Conectando…';
@@ -1782,7 +1787,7 @@ function vRut(){
       if(!r)return '<div class="rut-card fin"><div class="rut-name">Rutina borrada</div><div class="rut-acts"><button class="btn sm" data-asig="'+esc(a.id)+'">Quitar</button></div></div>';
       const others=S.asigAll.filter(x=>x.rutina===r.id&&x.cat!==S.cat&&asigState(x)!=='fin').map(x=>catName(x.cat));
       return '<div class="rut-card'+(k==='fin'?' fin':'')+'"><div style="display:flex;gap:8px;align-items:start;justify-content:space-between"><div class="rut-name">'+esc(r.nombre)+'</div><span class="chip '+r.tipo+'">'+(r.tipo==='gym'?'Gym':'Cancha')+'</span></div>'+
-        '<div class="rut-daylist">'+schedText(r,a)+'</div><div class="tiny">'+esc(vigText(a))+'</div>'+
+        '<div class="rut-daylist">'+schedText(r,a)+'</div><div class="tiny">'+esc(vigText(a))+(r.editada?' · <span class="mod-t">'+modTxt(r)+'</span>':'')+'</div>'+
         (others.length?'<div class="tiny">También la hacen: '+others.map(esc).join(', ')+'</div>':'')+
         '<div class="rut-acts"><button class="btn sm" data-rut="'+esc(r.id)+'">Ver rutina</button><button class="btn sm ghost" data-asig="'+esc(a.id)+'">Días y fechas</button><button class="btn sm ghost" data-rutprint="'+esc(r.id)+'" data-asigid="'+esc(a.id)+'">Imprimir planilla</button>'+(k==='vig'?'<button class="btn sm ghost" data-asigend="'+esc(a.id)+'">Finalizar hoy</button>':'')+'</div></div>';
     }).join('')+'</div>';
@@ -1791,6 +1796,9 @@ function vRut(){
 }
 
 /* ----- biblioteca (vista general, desde el menú lateral) ----- */
+/* "últ. mod. 14/10" (con año solo si no es este año) */
+function modTxt(r){if(!r||!r.editada)return '';const d=new Date(r.editada);const y=d.getFullYear();
+  return 'últ. mod. '+pad(d.getDate())+'/'+pad(d.getMonth()+1)+(y!==new Date().getFullYear()?'/'+String(y).slice(-2):'');}
 function rutEstado(r){
   if(r.archivada)return 'arch';if(r.borrador)return 'pend';
   const as=S.asigAll.filter(a=>a.rutina===r.id);
@@ -1807,7 +1815,7 @@ function vLib(){
   const groups={pend:[],vig:[],libre:[],venc:[],arch:[]};list.forEach(r=>groups[rutEstado(r)].push(r));
   const row=r=>{const ds=rutDays(r);const act=S.asigAll.filter(a=>a.rutina===r.id&&asigState(a)!=='fin');
     const fin=S.asigAll.filter(a=>a.rutina===r.id&&asigState(a)==='fin');const st=rutEstado(r);
-    return '<div class="lib-row"><button class="lib-main" data-rut="'+esc(r.id)+'"><span class="chip '+r.tipo+'">'+(r.tipo==='gym'?'Gym':'Cancha')+'</span><b>'+esc(r.nombre)+'</b><span class="tiny">'+(r.semanas||4)+' sem · '+ds.length+(ds.length===1?' día':' días')+'</span></button>'+
+    return '<div class="lib-row"><button class="lib-main" data-rut="'+esc(r.id)+'"><span class="chip '+r.tipo+'">'+(r.tipo==='gym'?'Gym':'Cancha')+'</span><b>'+esc(r.nombre)+'</b><span class="tiny">'+(r.semanas||4)+' sem · '+ds.length+(ds.length===1?' día':' días')+'</span>'+(r.editada?'<span class="mod-t">'+modTxt(r)+'</span>':'')+'</button>'+
       '<span class="lib-cats">'+(act.length?act.map(a=>'<button class="asig-chip'+(asigState(a)==='prox'?' prox':'')+'" data-asig="'+esc(a.id)+'" title="'+esc(vigText(a))+'">'+esc(catName(a.cat))+'</button>').join(''):(st==='venc'?'<span class="tiny">Usada por '+[...new Set(fin.map(a=>catName(a.cat)))].map(esc).join(', ')+'</span>':''))+'</span>'+
       '<span class="lib-acts">'+(st!=='arch'?'<button class="btn sm" data-asignew="'+esc(r.id)+'">Asignar</button>':'')+'<button class="btn sm ghost" data-rutprint="'+esc(r.id)+'" title="Imprimir">Imprimir</button><button class="btn sm ghost" data-rutdup="'+esc(r.id)+'">Duplicar</button>'+
       (st==='arch'?'<button class="btn sm ghost" data-rutarch="'+esc(r.id)+'" data-v="0">Sacar del archivo</button>':(st!=='vig'?'<button class="btn sm ghost" data-rutarch="'+esc(r.id)+'" data-v="1">Archivar</button>':''))+'</span></div>';};
@@ -1841,7 +1849,7 @@ function openRut(id,preset,after){
     '<div><h3>Días de entrenamiento</h3><div class="day-tabs" id="dayTabs"></div></div>'+
     '<div class="day-panel" id="dayPanel"></div>';
   const foot='<div class="modal-f">'+(isNew?'':'<button class="btn danger" id="r_del">Borrar rutina</button>')+'<button class="btn" id="r_print">Imprimir planilla</button><div class="grow"></div><button class="btn" data-close>Cancelar</button><button class="btn pri" id="r_save">'+(isNew?'Guardar y asignar':'Guardar rutina')+'</button></div>';
-  openModal(modalHead('Biblioteca de rutinas',isNew?'Nueva rutina':r.nombre)+'<div class="modal-b">'+b+'</div>'+foot,mw=>{
+  openModal(modalHead('Biblioteca de rutinas'+(r0&&r0.editada?' · '+modTxt(r0):''),isNew?'Nueva rutina':r.nombre)+'<div class="modal-b">'+b+'</div>'+foot,mw=>{
     mw.classList.add('full');
     const q=id=>mw.querySelector('#'+id);
     const panel=q('dayPanel'),tabs=q('dayTabs');
@@ -2920,7 +2928,7 @@ function openRutView(id,di,w){
   else ATLCTX={desde:null,hasta:null,sem:null,back:()=>openRutView(id,di,w)};
   b+=fichaHtml(sd,r.tipo,null,r);ATLCTX_LAST=ATLCTX;ATLCTX=null;
   if(!RO&&a)b+='<p class="tiny" style="margin:0">Tocá un ejercicio para ver qué cargaron los atletas en la semana '+(w+1)+' ('+esc(fmtD(addDays(a.desde,7*w),{day:'numeric',month:'short'}))+' al '+esc(fmtD(addDays(a.desde,7*w+6),{day:'numeric',month:'short'}))+').</p>';
-  openModal(modalHead(a?catName(a.cat)+' · '+vigText(a):'Rutina',r.nombre)+'<div class="modal-b">'+b+'</div><div class="modal-f"><button class="btn" id="r_print" type="button">Imprimir planilla</button>'+(RO?'':'<button class="btn" id="r_edit" type="button">Editar rutina</button>')+'<div class="grow"></div><button class="btn pri" data-close>Cerrar</button></div>',mw=>{
+  openModal(modalHead((a?catName(a.cat)+' · '+vigText(a):'Rutina')+(r.editada?' · '+modTxt(r):''),r.nombre)+'<div class="modal-b">'+b+'</div><div class="modal-f"><button class="btn" id="r_print" type="button">Imprimir planilla</button>'+(RO?'':'<button class="btn" id="r_edit" type="button">Editar rutina</button>')+'<div class="grow"></div><button class="btn pri" data-close>Cerrar</button></div>',mw=>{
     const ed=mw.querySelector('#r_edit');if(ed)ed.onclick=()=>openRut(id);
     mw.querySelectorAll('[data-rvd]').forEach(x=>x.onclick=()=>openRutView(id,+x.dataset.rvd,w));
     mw.querySelectorAll('[data-rvw]').forEach(x=>x.onclick=()=>openRutView(id,di,+x.dataset.rvw));
