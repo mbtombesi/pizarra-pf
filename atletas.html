@@ -148,6 +148,17 @@ h3{font-family:var(--f-disp);font-weight:700;font-size:18px;text-transform:upper
 .add-f{display:grid;grid-template-columns:1.2fr 1fr .8fr auto;gap:8px;align-items:end}
 @media (max-width:420px){.add-f{grid-template-columns:1fr 1fr 1fr}.add-f .btn{grid-column:1/-1}}
 /* video */
+.vmini{position:fixed;right:16px;bottom:16px;z-index:300;width:min(420px,calc(100vw - 32px));background:#000;border-radius:12px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.45);display:flex;flex-direction:column}
+.vmini iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#000}
+.vmini.vert{width:min(260px,calc(100vw - 32px))}.vmini.vert iframe{aspect-ratio:9/16}
+.vmini.big{left:50%;right:auto;bottom:auto;top:50%;transform:translate(-50%,-50%);width:min(900px,calc(100vw - 24px))}
+.vmini.big.vert{width:min(380px,calc(100vw - 24px))}.vmini.big.vert iframe{max-height:calc(100vh - 90px)}
+.vmini-bar{display:flex;align-items:center;gap:4px;padding:6px 8px;background:#111;color:#eee;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.vmini-bar span{flex:1}
+.vmini-bar button,.vmini-bar a{background:none;border:0;color:#eee;font-size:15px;width:30px;height:28px;border-radius:6px;display:grid;place-items:center;text-decoration:none;cursor:pointer}
+.vmini-bar button:hover,.vmini-bar a:hover{background:#2a2a2a}
+.has-th{display:inline-flex!important;align-items:center;gap:6px;padding:2px 8px 2px 2px!important}
+.vid-th{width:56px;height:32px;object-fit:cover;border-radius:4px;display:block;background:#000}
 .vmodal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:60;display:grid;place-items:center;padding:16px}
 .vbox{width:min(800px,100%);display:grid;gap:8px}
 .vbox iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#000}
@@ -319,6 +330,34 @@ function curTheme(){const t=document.documentElement.getAttribute('data-theme');
 function paintThemeBtn(){const b=$('#themeBtn');const d=curTheme()==='dark';b.textContent=d?'☀':'☾';b.setAttribute('aria-label',d?'Modo claro':'Modo oscuro');b.title=d?'Modo claro':'Modo oscuro';}
 $('#themeBtn').onclick=()=>{const n=curTheme()==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);ls.set('pf-theme',n);paintThemeBtn();};
 paintThemeBtn();
+/* ---------- videos: se ven adentro de la app, en una ventanita ---------- */
+function vidInfo(u){
+  u=String(u||'').trim();let m;
+  if((m=u.match(/youtube\.com\/shorts\/([\w-]{6,})/)))return {src:'https://www.youtube.com/embed/'+m[1]+'?autoplay=1&rel=0&playsinline=1',thumb:'https://i.ytimg.com/vi/'+m[1]+'/mqdefault.jpg',vert:true};
+  if((m=u.match(/youtu\.be\/([\w-]{6,})/)||u.match(/[?&]v=([\w-]{6,})/)||u.match(/youtube\.com\/(?:embed|live)\/([\w-]{6,})/)))return {src:'https://www.youtube.com/embed/'+m[1]+'?autoplay=1&rel=0&playsinline=1',thumb:'https://i.ytimg.com/vi/'+m[1]+'/mqdefault.jpg'};
+  if((m=u.match(/drive\.google\.com\/file\/d\/([\w-]+)/)||u.match(/drive\.google\.com\/open\?id=([\w-]+)/)))return {src:'https://drive.google.com/file/d/'+m[1]+'/preview',thumb:'https://drive.google.com/thumbnail?id='+m[1]+'&sz=w320'};
+  if((m=u.match(/vimeo\.com\/(?:video\/)?(\d+)/)))return {src:'https://player.vimeo.com/video/'+m[1]+'?autoplay=1'};
+  if((m=u.match(/instagram\.com\/(?:p|reel|reels|tv)\/([\w-]+)/)))return {src:'https://www.instagram.com/p/'+m[1]+'/embed',vert:true};
+  return null;
+}
+function vidBtn(u,cls){
+  const v=vidInfo(u);const href=esc(fixUrl(u));
+  return '<button type="button" class="'+(cls||'vid')+(v&&v.thumb?' has-th':'')+'" data-vplay="'+href+'" title="Ver video">'+(v&&v.thumb?'<img class="vid-th" alt="" loading="lazy" src="'+esc(v.thumb)+'">':'')+'<span>▶ Video</span></button>';
+}
+function vidOpen(u){
+  const v=vidInfo(u);
+  if(!v){window.open(fixUrl(u),'_blank','noopener');return;}
+  let box=document.getElementById('vmini');if(!box){box=document.createElement('div');box.id='vmini';document.body.appendChild(box);}
+  box.className='vmini'+(v.vert?' vert':'')+(window.innerWidth<=600?' big':'');
+  box.innerHTML='<div class="vmini-bar"><span>Video</span><button type="button" data-vsize title="Agrandar / achicar">⤢</button><a href="'+esc(fixUrl(u))+'" target="_blank" rel="noopener" title="Abrir en otra pestaña">↗</a><button type="button" data-vclose title="Cerrar" aria-label="Cerrar video">✕</button></div>'+
+    '<iframe src="'+esc(v.src)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="Video del ejercicio"></iframe>';
+}
+document.addEventListener('click',e=>{
+  const p=e.target.closest('[data-vplay]');if(p){e.preventDefault();e.stopPropagation();vidOpen(p.dataset.vplay);return;}
+  if(e.target.closest('[data-vclose]')){const b=document.getElementById('vmini');if(b)b.remove();return;}
+  if(e.target.closest('[data-vsize]')){document.getElementById('vmini').classList.toggle('big');}
+},true);
+
 /* ---------- estado ---------- */
 const st={cat:null,tab:'rutina',asig:null,day:null,week:null};
 /* Si entran con el link de una categoría (atletas.html#u15-a) quedan fijos en esa: no ven el menú de todas */
@@ -381,7 +420,7 @@ function rutView(c){
       (b.nota?'<div class="blk-nota">'+esc(b.nota)+'</div>':'')+
       (b.ejercicios||[]).filter(e=>e.n).map((e,ei)=>'<div class="ex"><span class="ex-i">'+L+(ei+1)+'</span><span class="ex-n">'+esc(e.n)+(e.obs?'<i>'+esc(e.obs)+'</i>':'')+'</span>'+
         '<span class="ex-p'+(e.progW?' chg':'')+'">'+presHtml(e,b)+'</span>'+
-        '<span class="ex-a">'+(e.c?'<span class="ex-c">'+esc(e.c)+'</span>':'')+(e.link?'<button class="vid" data-vid="'+esc(fixUrl(e.link))+'">▶ Video</button>':'')+'<button class="reg" data-regex="'+esc(e.n)+'">+ Anotar mi peso</button></span></div>').join('')+'</div>';});
+        '<span class="ex-a">'+(e.c?'<span class="ex-c">'+esc(e.c)+'</span>':'')+(e.link?vidBtn(e.link):'')+'<button class="reg" data-regex="'+esc(e.n)+'">+ Anotar mi peso</button></span></div>').join('')+'</div>';});
   if(rd.principal)h+='<div class="sec card"><span class="lbl">Parte principal</span><div class="txt">'+esc(rd.principal)+'</div></div>';
   if(rd.calma)h+='<div class="sec card"><span class="lbl">Vuelta a la calma</span><div class="txt">'+esc(rd.calma)+'</div></div>';
   if(rd.notas)h+='<div class="sec card"><span class="lbl">Notas</span><div class="txt">'+esc(rd.notas)+'</div></div>';
